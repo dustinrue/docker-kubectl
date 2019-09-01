@@ -1,4 +1,6 @@
 #!/bin/sh
+set
+set -x
 
 # configure kubectl
 mkdir -p /root/.kube
