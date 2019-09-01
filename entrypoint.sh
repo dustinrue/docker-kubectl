@@ -5,7 +5,8 @@ if [ ! -f /kubeconfig ]; then
   echo ${KUBERNETES_CONFIGURATION:?} | base64 -d > /kubeconfig
 fi
 
-export KUBECONFIG="/kubeconfig"
+mkdir -p /root/.kube
+cp /kubeconfig /root/.kube/config
 
 exec "$@"
 
