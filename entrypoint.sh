@@ -1,16 +1,11 @@
 #!/bin/sh
-set
-set -x
 
-# configure kubectl
-mkdir -p /root/.kube
-
-if [ "${K8S_SECRET_KUBERNETES_CONFIGURATION}" != "" ]; then
-  KUBERNETES_CONFIGURATION=${K8S_SECRET_KUBERNETES_CONFIGURATION}
+# configure kubectl if the user did not mount a kubeconfig file
+if [ ! -f /kubeconfig ]; then
+  echo ${KUBERNETES_CONFIGURATION:?} | base64 -d > /kubeconfig
 fi
 
-
-echo ${KUBERNETES_CONFIGURATION} | base64 -d > /root/.kube/config
+export KUBECONFIG="/kubeconfig"
 
 exec "$@"
 

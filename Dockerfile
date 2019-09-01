@@ -5,6 +5,7 @@ RUN apk --no-cache add gettext ca-certificates openssl \
     && apk --no-cache upgrade \
     && rm -rf /var/cache/apk/*
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh \
+    && ln -s /entrypoint.sh /usr/local/bin/k8s_init.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]
